@@ -30,10 +30,10 @@ const Navbar = ({ isLoggedIn }) => {
         </div>
       ) : (
         /* Guest View: Show Login and Account Creation options */
-        <div className="flex px-4 md:px-0 gap-4">
+        <div className="flex px-2 md:px-0 text-sm sm:text-base gap-2 sm:gap-4">
           <button
             onClick={() => navigate("/login")}
-            className="text-black hover:text-primary cursor-pointer px-4 py-1"
+            className="text-black border rounded-lg hover:text-primary cursor-pointer px-4 py-1"
           >
             Login
           </button>
