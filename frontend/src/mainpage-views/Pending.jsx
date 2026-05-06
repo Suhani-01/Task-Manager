@@ -55,7 +55,7 @@ const Pending = ({ setActivePage }) => {
       clears the activeAction, effectively closing open dropdowns.
     */
     <div onClick={() => setActiveAction()}
-      className="px-8 h-full w-full relative flex flex-col gap-7"
+      className="px-3 sm:px-8 h-full w-full relative flex flex-col gap-7"
     >
 
       {/* Edit Modal Overlay */}

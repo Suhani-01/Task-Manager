@@ -72,7 +72,7 @@ const AddTask = ({setActivePage}) => {
   };
 
   return (
-    <div className="px-8 flex flex-col gap-7 relative">
+    <div className="px-3 sm:px-8 flex flex-col gap-7 relative">
       {/* Success Notification Popup */}
       {taskAdded && (
         <div className="absolute animate-bounce bg-white text-success flex gap-4 text-lg items-center p-4 rounded-2xl shadow-lg mr-10 right-0 z-50">

@@ -6,7 +6,7 @@ import Stats from "../components/Stats";
 
 const Profile = ({ userData }) => {
   return (
-    <div className="px-8 flex flex-col gap-7">
+    <div className="px-3 sm:px-8 flex flex-col gap-7">
       {/* heading */}
       <div className="my-4">
         <div>
