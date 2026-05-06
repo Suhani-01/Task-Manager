@@ -32,7 +32,8 @@ A full-stack task management app built with the MERN stack.
 git clone https://github.com/Suhani-01/Task-Manager.git
 ```
 
-### Backend
+### ⚡Backend
+Open Terminal : 
 ```bash
 cd backend
 npm install
@@ -57,13 +58,13 @@ app.use(cors({
 }));
 ```
  
-
+Terminal :
 ```bash
 npm run dev
 ```
 
-### Frontend
-Open a new Terminal and type :
+### ⚡Frontend
+Open a new Terminal :
 
 ```bash
 cd frontend
@@ -76,6 +77,7 @@ Create a `.env` file in the `client` folder:
 VITE_API_URL=http://localhost:5000
 ```
  
+Terminal :
 ```bash
 npm run dev
 ```
