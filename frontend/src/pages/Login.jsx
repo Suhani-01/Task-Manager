@@ -59,7 +59,7 @@ const Login = () => {
     <div className="h-full relative w-full overflow-hidden grid md:grid-cols-2 items-center">
       
       {/* App Branding */}
-      <div className="absolute top-0 md:top-1 -left-1 md:left-5 cursor-pointer">
+      <div className="absolute top-1 left-1  md:left-5 cursor-pointer">
         <Logo />
       </div>
 
@@ -79,7 +79,7 @@ const Login = () => {
 
       {/* Right side: Login Form portion */}
       <div className="h-full flex items-center justify-center">
-        <div className="w-[80%] shadow-xl rounded-2xl px-10 py-15">
+        <div className="w-[90%] sm:w-[80%] shadow-xl rounded-2xl px-10 py-15">
           <h1 className="text-3xl font-bold text-text-primary">Login</h1>
           <p className="text-text-secondary text-sm mt-1 mb-7">
             Enter your credentials to access your account
