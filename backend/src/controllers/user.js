@@ -50,8 +50,9 @@ export const login = async (req, res) => {
     const token = generateToken(user);
 
     res.cookie("token", token, {
-      httpOnly: true,
-      secure: false,
+      httpOnly: true, //document.cookie frontend ko access nahi hogi
+      secure: true, //imp to work with sameSite :none
+      sameSite:"none", //taaki kisi b domain pr cookie chli jaae ,by default vo bhs same domain pr bhejta hai
     });
 
     return res.status(200).json({
