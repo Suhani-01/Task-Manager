@@ -1,4 +1,3 @@
-
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import { MdVerifiedUser } from "react-icons/md";
@@ -11,31 +10,29 @@ import { FaLock } from "react-icons/fa";
 import { useEffect, useState } from "react";
 
 const Landing = () => {
-  const [isLoggedIn,setIsLoggedIn]=useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
-    useEffect(() => {
-      const fetchUser = async () => {
-        try{
-          const API=`${import.meta.env.VITE_API_URL}/api/user/profile`
-          const res = await fetch(API, {
+
+  // Check user authentication status on component mount
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const API = `${import.meta.env.VITE_API_URL}/api/user/profile`;
+        const res = await fetch(API, {
           method: "GET",
-          credentials: "include", // 👈 MOST IMPORTANT
+          credentials: "include", // Required for cross-origin cookie/session handling
         });
         const data = await res.json();
-        console.log(data);
         
         if (res.ok) {
-          console.log(data);
-          setIsLoggedIn(true)
+          setIsLoggedIn(true);
         }
-  
-      }catch(err){
+      } catch (err) {
         console.log("Something went wrong", err);
-      }}
-      fetchUser();
-    }, []);
-
-
+      }
+    };
+    fetchUser();
+  }, []);
 
   return (
     <div
@@ -44,44 +41,27 @@ const Landing = () => {
     >
       <Navbar isLoggedIn={isLoggedIn} />
 
-      {/* HERO */}
+      {/* HERO SECTION: Main value proposition and CTA */}
       <section className="max-w-7xl mx-auto px-6 pt-16 pb-15 flex items-center gap-16">
-        {/* ── Left: copy ── */}
+        {/* Left Content: Headline and Call to Action */}
         <div className="flex-1 max-w-xl">
-          {/* Eyebrow pill */}
           <div className="flex items-center gap-2 mb-6">
-            <span
-              style={{ color: "var(--color-primary)" }}
-              className="text-base"
-            >
-              ✦
-            </span>
-            <p
-              className="text-sm font-medium"
-              style={{ color: "var(--color-primary)" }}
-            >
+            <span style={{ color: "var(--color-primary)" }} className="text-base">✦</span>
+            <p className="text-sm font-medium" style={{ color: "var(--color-primary)" }}>
               Organize your work. Boost your productivity.
             </p>
           </div>
 
-          {/* Main headline */}
           <div className="font-extrabold text-4xl mb-5">
             <div className="mb-2">Manage Tasks.</div>
-            <div>
-              Achieve <span className="text-primary">More.</span>
-            </div>
+            <div>Achieve <span className="text-primary">More.</span></div>
           </div>
 
-          {/* Sub-copy */}
-          <p
-            className="text-lg mb-8"
-            style={{ color: "var(--color-text-secondary)" }}
-          >
+          <p className="text-lg mb-8" style={{ color: "var(--color-text-secondary)" }}>
             Task Manager helps you organize your tasks, stay focused, and get
             things done efficiently.
           </p>
 
-          {/* CTA row */}
           <div className=" mb-10">
             <button
               onClick={() => navigate("/getStarted")}
@@ -92,27 +72,22 @@ const Landing = () => {
             </button>
           </div>
 
-          {/* Trust badges */}
+          {/* Trust Badges: Map through feature highlights */}
           <div className="flex items-center gap-8">
             {[
               { icon: <MdVerifiedUser />, label: "100% Free" },
               { icon: <MdOutlineCreditCardOff />, label: "No Credit Card" },
               { icon: <MdElectricBolt />, label: "Easy to Use" },
             ].map(({ icon, label }) => (
-              <div
-                key={label}
-                className="flex p-2 rounded shadow items-center gap-2"
-              >
+              <div key={label} className="flex p-2 rounded shadow items-center gap-2">
                 <span className="text-primary">{icon}</span>
-                <span className="text-sm text-text-secondary font-medium">
-                  {label}
-                </span>
+                <span className="text-sm text-text-secondary font-medium">{label}</span>
               </div>
             ))}
           </div>
         </div>
 
-        {/*  Right : dashboard screenshot */}
+        {/* Right Content: Product Preview Image */}
         <div className="flex-1 flex justify-end">
           <div
             className="rounded-2xl overflow-hidden shadow-2xl border"
@@ -131,7 +106,7 @@ const Landing = () => {
         </div>
       </section>
 
-      {/*  FEATURES  */}
+      {/* FEATURES SECTION: Grid display of app capabilities */}
       <section
         className="py-10 border-t"
         style={{
@@ -140,12 +115,10 @@ const Landing = () => {
         }}
       >
         <div className="max-w-7xl mx-auto px-6">
-          {/* Heading */}
           <h2 className="text-2xl font-bold text-center mb-14">
             Everything you need to stay productive
           </h2>
 
-          {/* Four feature cards */}
           <div className="grid grid-cols-4 gap-10">
             {[
               {
@@ -185,16 +158,10 @@ const Landing = () => {
                   {icon}
                 </div>
                 <div>
-                  <h3
-                    className="font-bold text-base"
-                    style={{ color: "var(--color-text-primary)" }}
-                  >
+                  <h3 className="font-bold text-base" style={{ color: "var(--color-text-primary)" }}>
                     {title}
                   </h3>
-                  <p
-                    className="text-sm leading-relaxed"
-                    style={{ color: "var(--color-text-secondary)" }}
-                  >
+                  <p className="text-sm leading-relaxed" style={{ color: "var(--color-text-secondary)" }}>
                     {desc}
                   </p>
                 </div>

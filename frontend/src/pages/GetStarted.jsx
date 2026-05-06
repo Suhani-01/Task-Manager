@@ -7,40 +7,46 @@ import { FaRegUser } from "react-icons/fa";
 import Logo from "../components/Logo";
 import { useNavigate } from "react-router-dom";
 
-
 const GetStarted = () => {
-  const navigate=useNavigate();
+  const navigate = useNavigate();
+
+  // --- Form States ---
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [name,setName]=useState("");
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword,setConfirmPassword]=useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
- 
-
-
+  /**
+   * Handles user registration
+   * Validates input, checks for password match, and redirects to login on success
+   */
   const handleSignup = async () => {
     setError("");
+
+    // Field presence validation
     if (!email || !password || !name) {
       setError("Please fill in all fields.");
       return;
     }
-    if(password!=confirmPassword){
+
+    // Client-side password confirmation check
+    if (password !== confirmPassword) {
       setError("Password is not matching");
       return;
     }
 
     setLoading(true);
     try {
-      const API=`${import.meta.env.VITE_API_URL}/api/user/signup`
+      const API = `${import.meta.env.VITE_API_URL}/api/user/signup`
       const res = await fetch(API, {
         method: "POST",
-        credentials:"include",
+        credentials: "include", // Required for session handling
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name,email,password }),
+        body: JSON.stringify({ name, email, password }),
       });
 
       const data = await res.json();
@@ -48,10 +54,8 @@ const GetStarted = () => {
       if (!res.ok) {
         setError(data.message || "Invalid credentials.");
       } else {
-        // handle success — e.g. redirect or store token
-        console.log("Login success", data);
-        navigate("/login");
-        
+        console.log("Signup success", data);
+        navigate("/login"); // Direct user to login after successful account creation
       }
     } catch (e) {
       setError("Network error. Please try again.");
@@ -63,22 +67,22 @@ const GetStarted = () => {
 
   return (
     <div className="h-full relative w-full overflow-hidden grid grid-cols-2 items-center">
-            <div className="absolute top-1 left-5 cursor-pointer"><Logo/></div>
-      {/* Left side — unchanged */}
+      {/* App Branding */}
+      <div className="absolute top-1 left-5 cursor-pointer"><Logo /></div>
+
+      {/* Left Column: Visual/Marketing Content */}
       <div className="h-full bg-primary/20 flex flex-col gap-8 items-center justify-center">
-            
-            <div className="text-center">
-                <h1 className="mb-3">Welcome!</h1>
-                <p className="text-text-secondary text-sm ">Create Account to organize your tasks and stay productive .</p>
-            </div>       
-                    
-           <div className="overflow-hidden rounded-4xl mx-auto">
-            <img className="h-100 scale-[1.4]" src={loginImage} alt="Login" /> 
-           </div>
-        
+        <div className="text-center">
+          <h1 className="mb-3">Welcome!</h1>
+          <p className="text-text-secondary text-sm ">Create Account to organize your tasks and stay productive .</p>
+        </div>
+
+        <div className="overflow-hidden rounded-4xl mx-auto">
+          <img className="h-100 scale-[1.4]" src={loginImage} alt="Login" />
+        </div>
       </div>
 
-      {/* Login portion */}
+      {/* Right Column: Signup Form */}
       <div className="h-full flex items-center justify-center">
         <div className="w-[80%] shadow-xl rounded-2xl px-10 py-15">
           <h1 className="text-3xl font-bold text-text-primary">Create Account</h1>
@@ -86,7 +90,7 @@ const GetStarted = () => {
             Enter your credentials to create new account
           </p>
 
-          {/* Name */}
+          {/* Name Field */}
           <label className="block text-sm font-medium text-text-primary mb-2" htmlFor="name">
             Name
           </label>
@@ -100,9 +104,9 @@ const GetStarted = () => {
               onChange={(e) => setName(e.target.value)}
               className="w-full pl-10 pr-4 py-3 border border-border rounded-xl text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:border-primary"
             />
-          </div>          
+          </div>
 
-          {/* Email */}
+          {/* Email Field */}
           <label className="block text-sm font-medium text-text-primary mb-2" htmlFor="email">
             Email Address
           </label>
@@ -118,7 +122,7 @@ const GetStarted = () => {
             />
           </div>
 
-          {/* Password */}
+          {/* Password Field with visibility toggle */}
           <label className="block text-sm font-medium text-text-primary mb-2" htmlFor="password">
             Password
           </label>
@@ -132,8 +136,6 @@ const GetStarted = () => {
               onChange={(e) => setPassword(e.target.value)}
               className="w-full pl-10 pr-10 py-3 border border-border rounded-xl text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:border-primary"
             />
-
-            
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
@@ -143,7 +145,7 @@ const GetStarted = () => {
             </button>
           </div>
 
-          {/* Confirm Password */}
+          {/* Confirm Password Field */}
           <label className="block text-sm font-medium text-text-primary mb-2" htmlFor="confirm-password">
             Confirm Password
           </label>
@@ -157,8 +159,6 @@ const GetStarted = () => {
               onChange={(e) => setConfirmPassword(e.target.value)}
               className="w-full pl-10 pr-10 py-3 border border-border rounded-xl text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:border-primary"
             />
-
-            
             <button
               type="button"
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
@@ -168,11 +168,10 @@ const GetStarted = () => {
             </button>
           </div>
 
-
-          {/* Error */}
+          {/* Error Display */}
           {error && <p className="text-danger text-center text-xs mt-2">{error}</p>}
 
-          {/* Login Button */}
+          {/* Action Button */}
           <button
             onClick={handleSignup}
             disabled={loading}

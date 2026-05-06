@@ -2,16 +2,26 @@ import { useState } from "react";
 import { IoIosAdd } from "react-icons/io";
 import { FaCheckCircle } from "react-icons/fa"; 
 
+/**
+ * AddTask Component
+ * Provides a form to create new tasks.
+ */
 const AddTask = ({setActivePage}) => {
+  // Individual state pieces for each form field
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [priority, setPriority] = useState("medium");
   const [dueDate, setDueDate] = useState("");
   const [status, setStatus] = useState("pending");
+  
+  // UI feedback states
   const [errorMessage, setErrorMessage] = useState();
   const [loading, setLoading] = useState(false);
   const [taskAdded, setTaskAdded] = useState(false);
 
+  /**
+   * Resets all form fields to their initial values
+   */
   const clearFields = () => {
     setTitle("");
     setDescription("");
@@ -20,11 +30,16 @@ const AddTask = ({setActivePage}) => {
     setPriority("medium");
   };
 
+  /**
+   * Validates input and sends a POST request to the API
+   */
   const createTask = async () => {
+    // Basic frontend validation
     if (!title || !priority || !status) {
       setErrorMessage("Missing input fields");
       return;
     }
+    
     setLoading(true);
 
     try {
@@ -37,9 +52,11 @@ const AddTask = ({setActivePage}) => {
       });
 
       const data = await res.json();
+      
       if (!res.ok) {
         setErrorMessage(data.message || "Something went wrong");
       } else {
+        // Show success notification and hide it after 3 seconds
         setTaskAdded(true);
         setTimeout(() => {
           setTaskAdded(false);
@@ -47,7 +64,7 @@ const AddTask = ({setActivePage}) => {
       }
     } catch (err) {
       setErrorMessage("Network error. Please try again.");
-      console.log(err)
+      console.error(err);
     } finally {
       setLoading(false);
       clearFields();
@@ -56,31 +73,28 @@ const AddTask = ({setActivePage}) => {
 
   return (
     <div className="px-8 flex flex-col gap-7 relative">
+      {/* Success Notification Popup */}
       {taskAdded && (
-        <div className="absolute animate-bounce bg-white text-success flex gap-4 text-lg items-center p-4 rounded-2xl shadow-lg mr-10 right-0">
-          {" "}
-          <FaCheckCircle /> Task Added Sucessfully
+        <div className="absolute animate-bounce bg-white text-success flex gap-4 text-lg items-center p-4 rounded-2xl shadow-lg mr-10 right-0 z-50">
+          <FaCheckCircle /> Task Added Successfully
         </div>
       )}
 
-      {/* heading */}
+      {/* Header Section */}
       <div className="my-4 flex justify-between">
         <div>
-          <h1>Add New Task</h1>
-          <p className="text-sm">
+          <h1 className="text-2xl font-bold">Add New Task</h1>
+          <p className="text-sm text-text-muted">
             Create a new task to stay organized and productive
           </p>
         </div>
       </div>
 
-      {/* form */}
+      {/* Form Container */}
       <div className="bg-white shadow-xl rounded-xl px-4 py-10">
         <div>
-          {/* Task Title */}
-          <label
-            className="block text-sm font-medium text-text-primary mb-2"
-            htmlFor="title"
-          >
+          {/* Task Title Input */}
+          <label className="block text-sm font-medium text-text-primary mb-2" htmlFor="title">
             Task Title <span className="text-danger">*</span>
           </label>
           <div className="relative mb-8">
@@ -90,115 +104,98 @@ const AddTask = ({setActivePage}) => {
               placeholder="Enter task title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="w-full px-4 py-3 border border-border rounded-xl text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:border-primary"
+              className="w-full px-4 py-3 border border-border rounded-xl text-sm focus:outline-none focus:border-primary"
             />
           </div>
 
-          {/* Task Description */}
-          <label
-            className="block text-sm font-medium text-text-primary mb-2"
-            htmlFor="description"
-          >
+          {/* Description Textarea */}
+          <label className="block text-sm font-medium text-text-primary mb-2" htmlFor="description">
             Description
           </label>
           <div className="relative mb-8">
             <textarea
-              type="text"
               id="description"
               rows={4}
               placeholder="Enter task description (optional)"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="w-full px-4 py-3 border border-border rounded-xl text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:border-primary"
+              className="w-full px-4 py-3 border border-border rounded-xl text-sm focus:outline-none focus:border-primary"
             />
           </div>
 
-          <div className="grid mb-3 gap-7 grid-cols-3">
-            {/* Task Priority */}
+          {/* Selection Grid: Priority, Due Date, and Status */}
+          <div className="grid mb-3 gap-7 grid-cols-1 md:grid-cols-3">
+            {/* Priority Select */}
             <div>
-              <label
-                className="block text-sm font-medium text-text-primary mb-2"
-                htmlFor="priority"
-              >
+              <label className="block text-sm font-medium text-text-primary mb-2" htmlFor="priority">
                 Priority <span className="text-danger">*</span>
               </label>
-              <div className="relative mb-5">
-                <select
-                  id="priority"
-                  value={priority}
-                  onChange={(e) => setPriority(e.target.value)}
-                  className="w-full px-4 py-3 border border-border rounded-xl text-sm text-text-primary focus:outline-none focus:border-primary bg-white"
-                >
-                  <option value="medium">🟡 Medium</option> {/* default */}
-                  <option value="high">🔴 High</option>
-                  <option value="low">🟢 Low</option>
-                </select>
-              </div>
+              <select
+                id="priority"
+                value={priority}
+                onChange={(e) => setPriority(e.target.value)}
+                className="w-full px-4 py-3 border border-border rounded-xl text-sm bg-white focus:outline-none"
+              >
+                <option value="medium">🟡 Medium</option>
+                <option value="high">🔴 High</option>
+                <option value="low">🟢 Low</option>
+              </select>
             </div>
 
-            {/* Due Date */}
+            {/* Due Date Input */}
             <div>
-              <label
-                className="block text-sm font-medium text-text-primary mb-2"
-                htmlFor="dueDate"
-              >
+              <label className="block text-sm font-medium text-text-primary mb-2" htmlFor="dueDate">
                 Due Date
               </label>
-              <div className="relative mb-5">
-                <input
-                  type="date"
-                  id="dueDate"
-                  value={dueDate}
-                  onChange={(e) => setDueDate(e.target.value)}
-                  className="w-full px-4 py-3 border border-border rounded-xl text-sm text-text-primary placeholder:text-text-muted focus:outline-none focus:border-primary"
-                />
-              </div>
+              <input
+                type="date"
+                id="dueDate"
+                value={dueDate}
+                onChange={(e) => setDueDate(e.target.value)}
+                className="w-full px-4 py-3 border border-border rounded-xl text-sm focus:outline-none"
+              />
             </div>
 
-            {/* Task Status */}
+            {/* Status Select */}
             <div>
-              <label
-                className="block text-sm font-medium text-text-primary mb-2"
-                htmlFor="status"
-              >
+              <label className="block text-sm font-medium text-text-primary mb-2" htmlFor="status">
                 Status <span className="text-danger">*</span>
               </label>
-              <div className="relative mb-5">
-                <select
-                  id="status"
-                  value={status}
-                  onChange={(e) => setStatus(e.target.value)}
-                  className="w-full px-4 py-3 border border-border rounded-xl text-sm text-text-primary focus:outline-none focus:border-primary bg-white"
-                >
-                  <option value="pending">🟡 Pending</option> {/* default */}
-                  <option value="completed">🟢 Completed</option>
-                </select>
-              </div>
+              <select
+                id="status"
+                value={status}
+                onChange={(e) => setStatus(e.target.value)}
+                className="w-full px-4 py-3 border border-border rounded-xl text-sm bg-white focus:outline-none"
+              >
+                <option value="pending">🟡 Pending</option>
+                <option value="completed">🟢 Completed</option>
+              </select>
             </div>
           </div>
         </div>
 
-        <div className="flex gap-5 justify-end">
-          <div
+        {/* Action Buttons */}
+        <div className="flex gap-5 justify-end mt-8">
+          <button
             onClick={() => {
               clearFields();
-              setActivePage(0);
+              setActivePage(0); // Navigate back to list/dashboard
             }}
-            className="flex text-sm w-fit h-fit cursor-pointer border border-primary text-primary px-4 py-2 rounded-sm gap-1 "
+            className="text-sm px-4 py-2 border border-primary text-primary rounded hover:bg-primary/5 transition-colors"
           >
             Cancel
-          </div>
-          <button disabled={loading}
-            onClick={() => createTask()}
-            className="flex w-fit h-fit cursor-pointer hover:bg-primary-hover bg-primary text-white px-4 py-2 rounded-sm gap-1 "
+          </button>
+          
+          <button 
+            disabled={loading}
+            onClick={createTask}
+            className="flex items-center bg-primary text-white px-4 py-2 rounded hover:bg-primary-hover disabled:opacity-50 transition-all"
           >
             {loading ? (
-              <div className="text-sm">Adding...</div>
+              <span className="text-sm">Adding...</span>
             ) : (
               <>
-                <span className="text-xl">
-                  <IoIosAdd />
-                </span>
+                <IoIosAdd className="text-xl" />
                 <span className="text-sm pr-2">Add Task</span>
               </>
             )}

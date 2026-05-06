@@ -2,18 +2,25 @@ import React from "react";
 import Logo from "./Logo";
 import { useNavigate } from "react-router-dom"; 
 
-
+/**
+ * Navigation Bar Component
+ * Dynamically updates UI based on the user's login status
+ * shows Dashboard option if logged in else LogIn and Create Account
+ */
 const Navbar = ({ isLoggedIn }) => {
   const navigate = useNavigate();
+  
   return (
     <div className="flex justify-between items-center px-5">
+      {/* App Logo/Home Link */}
       <div>
         <Logo />
       </div>
 
+      {/* Conditional Navigation Logic */}
       {isLoggedIn ? (
+        /* Authenticated View: Show link to the dashboard */
         <div className="flex items-center gap-1">
-         
            <button
             onClick={() => navigate("/tasks")}
             className=" w-fit border border-primary text-primary cursor-pointer px-4 py-1 rounded-lg"
@@ -22,6 +29,7 @@ const Navbar = ({ isLoggedIn }) => {
           </button>
         </div>
       ) : (
+        /* Guest View: Show Login and Account Creation options */
         <div className="flex gap-4">
           <button
             onClick={() => navigate("/login")}

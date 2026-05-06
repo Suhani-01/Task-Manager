@@ -5,16 +5,25 @@ import { MdOutlineVisibility, MdOutlineVisibilityOff } from "react-icons/md";
 import loginImage from "../assets/login-image.png";
 import Logo from "../components/Logo";
 import { useNavigate } from "react-router-dom";
+
 const Login = () => {
   const navigate = useNavigate();
+
+  // --- UI & Form State ---
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  /**
+   * Submits credentials to the backend
+   * Validates presence of data and handles session cookies via 'include'
+   */
   const handleLogin = async () => {
     setError("");
+
+    // Basic client-side validation
     if (!email || !password) {
       setError("Please fill in all fields.");
       return;
@@ -22,10 +31,10 @@ const Login = () => {
 
     setLoading(true);
     try {
-      const API=`${import.meta.env.VITE_API_URL}/api/user/login`;
+      const API = `${import.meta.env.VITE_API_URL}/api/user/login`;
       const res = await fetch(API, {
         method: "POST",
-        credentials: "include",
+        credentials: "include", // Essential for cross-origin session/cookie support
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
@@ -35,9 +44,8 @@ const Login = () => {
       if (!res.ok) {
         setError(data.message || "Invalid credentials.");
       } else {
-        // handle success — e.g. redirect or store token
         console.log("Login success", data);
-        navigate("/tasks");
+        navigate("/tasks"); // Redirect to dashboard on success
       }
     } catch (err) {
       setError("Network error. Please try again.");
@@ -49,10 +57,12 @@ const Login = () => {
 
   return (
     <div className="h-full relative w-full overflow-hidden grid grid-cols-2 items-center">
+      {/* Absolute Logo branding */}
       <div className="absolute top-1 left-5 cursor-pointer">
         <Logo />
       </div>
-      {/* Left side  */}
+
+      {/* Left side: Marketing/Visual Branding */}
       <div className="h-full bg-primary/20 flex flex-col gap-8 items-center justify-center">
         <div className="text-center">
           <h1 className="mb-3">Welcome Back!</h1>
@@ -66,7 +76,7 @@ const Login = () => {
         </div>
       </div>
 
-      {/* Login portion */}
+      {/* Right side: Login Form portion */}
       <div className="h-full flex items-center justify-center">
         <div className="w-[80%] shadow-xl rounded-2xl px-10 py-15">
           <h1 className="text-3xl font-bold text-text-primary">Login</h1>
@@ -74,7 +84,7 @@ const Login = () => {
             Enter your credentials to access your account
           </p>
 
-          {/* Email */}
+          {/* Email Input Field */}
           <label
             className="block text-sm font-medium text-text-primary mb-2"
             htmlFor="email"
@@ -93,7 +103,7 @@ const Login = () => {
             />
           </div>
 
-          {/* Password */}
+          {/* Password Input Field with Toggle Visibility */}
           <label
             className="block text-sm font-medium text-text-primary mb-2"
             htmlFor="password"
@@ -123,10 +133,10 @@ const Login = () => {
             </button>
           </div>
 
-          {/* Error */}
+          {/* Error Message Display */}
           {error && <p className="text-danger text-xs mt-2">{error}</p>}
 
-          {/* Login Button */}
+          {/* Form Submission Button */}
           <button
             onClick={handleLogin}
             disabled={loading}
