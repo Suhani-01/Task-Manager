@@ -42,7 +42,7 @@ const Landing = () => {
       <Navbar isLoggedIn={isLoggedIn} />
 
       {/* HERO SECTION: Main value proposition and CTA */}
-      <section className="max-w-7xl mx-auto px-6 pt-16 pb-15 flex items-center gap-16">
+      <section className="max-w-7xl mx-auto px-4 md:px-6 pt-10  md:pt-16 pb-15 flex flex-col md:flex-row items-center gap-16">
         {/* Left Content: Headline and Call to Action */}
         <div className="flex-1 max-w-xl">
           <div className="flex items-center gap-2 mb-6">
@@ -119,7 +119,7 @@ const Landing = () => {
             Everything you need to stay productive
           </h2>
 
-          <div className="grid grid-cols-4 gap-10">
+          <div className="grid md:grid-cols-4 gap-10">
             {[
               {
                 icon: <FaCheckSquare />,

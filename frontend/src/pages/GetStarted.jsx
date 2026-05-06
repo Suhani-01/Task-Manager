@@ -66,12 +66,12 @@ const GetStarted = () => {
   };
 
   return (
-    <div className="h-full relative w-full overflow-hidden grid grid-cols-2 items-center">
+    <div className="h-full relative w-full overflow-hidden grid md:grid-cols-2 items-center">
       {/* App Branding */}
-      <div className="absolute top-1 left-5 cursor-pointer"><Logo /></div>
+      <div className="absolute top-0 md:top-1 -left-1 md:left-5 cursor-pointer"><Logo /></div>
 
       {/* Left Column: Visual/Marketing Content */}
-      <div className="h-full bg-primary/20 flex flex-col gap-8 items-center justify-center">
+      <div className="h-full hidden bg-primary/20 md:flex flex-col gap-8 items-center justify-center">
         <div className="text-center">
           <h1 className="mb-3">Welcome!</h1>
           <p className="text-text-secondary text-sm ">Create Account to organize your tasks and stay productive .</p>
@@ -84,7 +84,7 @@ const GetStarted = () => {
 
       {/* Right Column: Signup Form */}
       <div className="h-full flex items-center justify-center">
-        <div className="w-[80%] shadow-xl rounded-2xl px-10 py-15">
+        <div className="w-[80%] shadow-xl rounded-2xl px-10 py-10">
           <h1 className="text-3xl font-bold text-text-primary">Create Account</h1>
           <p className="text-text-secondary text-sm mt-1 mb-7">
             Enter your credentials to create new account
@@ -179,6 +179,8 @@ const GetStarted = () => {
           >
             {loading ? "Creating Account..." : "Create Account"}
           </button>
+
+          <div className="text-center mt-6">Already have an account ? <button onClick={()=>navigate("/login")} className="text-blue-600 underline cursor-pointer hover:text-blue-400">Log In</button></div>
         </div>
       </div>
     </div>

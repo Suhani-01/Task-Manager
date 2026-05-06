@@ -11,7 +11,7 @@ const Navbar = ({ isLoggedIn }) => {
   const navigate = useNavigate();
   
   return (
-    <div className="flex justify-between items-center px-5">
+    <div className="flex justify-between items-center md:px-5">
       {/* App Logo/Home Link */}
       <div>
         <Logo />
@@ -20,7 +20,7 @@ const Navbar = ({ isLoggedIn }) => {
       {/* Conditional Navigation Logic */}
       {isLoggedIn ? (
         /* Authenticated View: Show link to the dashboard */
-        <div className="flex items-center gap-1">
+        <div className="flex px-4 md:px-0 items-center gap-1">
            <button
             onClick={() => navigate("/tasks")}
             className=" w-fit border border-primary text-primary cursor-pointer px-4 py-1 rounded-lg"
@@ -30,7 +30,7 @@ const Navbar = ({ isLoggedIn }) => {
         </div>
       ) : (
         /* Guest View: Show Login and Account Creation options */
-        <div className="flex gap-4">
+        <div className="flex px-4 md:px-0 gap-4">
           <button
             onClick={() => navigate("/login")}
             className="text-black hover:text-primary cursor-pointer px-4 py-1"

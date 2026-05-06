@@ -56,14 +56,15 @@ const Login = () => {
   };
 
   return (
-    <div className="h-full relative w-full overflow-hidden grid grid-cols-2 items-center">
-      {/* Absolute Logo branding */}
-      <div className="absolute top-1 left-5 cursor-pointer">
+    <div className="h-full relative w-full overflow-hidden grid md:grid-cols-2 items-center">
+      
+      {/* App Branding */}
+      <div className="absolute top-0 md:top-1 -left-1 md:left-5 cursor-pointer">
         <Logo />
       </div>
 
       {/* Left side: Marketing/Visual Branding */}
-      <div className="h-full bg-primary/20 flex flex-col gap-8 items-center justify-center">
+      <div className="h-full hidden bg-primary/20 md:flex flex-col gap-8 items-center justify-center">
         <div className="text-center">
           <h1 className="mb-3">Welcome Back!</h1>
           <p className="text-text-secondary text-sm ">
@@ -144,6 +145,16 @@ const Login = () => {
           >
             {loading ? "Logging in..." : "Login"}
           </button>
+
+          <div className="text-center mt-8">
+            Dont have an account ?{" "}
+            <button
+              onClick={() => navigate("/getStarted")}
+              className="text-blue-600 underline cursor-pointer hover:text-blue-400"
+            >
+              Sign Up
+            </button>
+          </div>
         </div>
       </div>
     </div>
