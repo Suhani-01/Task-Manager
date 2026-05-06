@@ -32,7 +32,7 @@ A full-stack task management app built with the MERN stack.
 git clone https://github.com/Suhani-01/Task-Manager.git
 ```
 
-### ⚡Backend
+## ⚡Backend
 Open Terminal : 
 ```bash
 cd backend
@@ -47,7 +47,7 @@ MONGO_URI=mongodb+srv://<username>:<password>@<cluster-name>.mongodb.net/<databa
 JWT_SECRET=your_secret_key
 JWT_EXPIRE=7d
 ```
-## ⚠️ For Local Development
+### ⚠️ For Local Development
  
 In your backend `backedn/src/app.js`, update CORS to allow localhost:
  
@@ -63,7 +63,7 @@ Terminal :
 npm run dev
 ```
 
-### ⚡Frontend
+## ⚡Frontend
 Open a new Terminal :
 
 ```bash
