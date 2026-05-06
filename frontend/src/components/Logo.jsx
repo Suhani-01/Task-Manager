@@ -10,7 +10,7 @@ const Logo = () => {
   return (
     <div 
       onClick={() => navigate("/")} 
-      className="flex cursor-pointer w-[90%] mx-auto p-4 items-center gap-1 text-2xl"
+      className="flex cursor-pointer w-[90%] md:mx-auto p-2 md:p-4 items-center gap-1 text-xl sm:text-2xl"
     >
       {/* Icon */}
       <div className="text-primary">
