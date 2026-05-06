@@ -81,3 +81,32 @@ Terminal :
 ```bash
 npm run dev
 ```
+
+
+## 📂 Frontend Structure
+```text
+frontend/
+├── public/              # Static assets (favicons, manifest)
+├── src/
+│   ├── assets/          # Images (includes login page left image)
+│   ├── components/      # Reusable UI building blocks
+│   │   ├── ActiveComponent   # Dynamic view wrapper for main-page
+│   │   ├── CalculateDue      # returns -[overdue,Due Today,Completed,x-days left]
+│   │   ├── EditTask          # Task Edit component
+│   │   ├── Stats             # Tasks Stats
+│   │   ├── Logout            # Button with func
+│   │   ├── Navbar            # landing pg navbar
+│   │   └── TaskTable         # Shows Tasks component
+│   ├── hooks/           # Custom React hooks ( -> useUpdateTaskStatus)
+│   ├── mainpage-views/  # Sub-pages rendered within the MainPage shell
+│   │   ├── AddTask           # Task creation form
+│   │   ├── Dashboard         # Overview with stats
+│   │   ├── Profile           # user Profile
+│   │   ├── MyTasks           # Tasks
+│   │   └── Pending           # Filtered view for incomplete tasks
+│   ├── pages/           # High-level route pages ( Landing, Login, MainPage , SignUp)
+│   ├── App.jsx          # Main application component & routing
+│   ├── main.jsx         # Entry point for React
+│   └── index.css        # Global styles and Tailwind directives
+├── .env                 # Environment variables (API URL)
+└── package.json         # Project dependencies and scripts
