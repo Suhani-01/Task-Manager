@@ -11,7 +11,7 @@ const Navbar = ({ isLoggedIn }) => {
   const navigate = useNavigate();
   
   return (
-    <div className="flex justify-between items-center md:px-5">
+    <div className="flex justify-between items-center pt-2 md:px-5">
       {/* App Logo/Home Link */}
       <div>
         <Logo />
