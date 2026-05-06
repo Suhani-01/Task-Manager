@@ -1,20 +1,20 @@
 import { useState, useEffect } from "react";
-import { IoIosAdd } from "react-icons/io"; 
+import { IoIosAdd } from "react-icons/io";
 import { LuServerOff } from "react-icons/lu";
-import EditTask from "../components/EditTask"; 
+import EditTask from "../components/EditTask";
 import TaskTable from "../components/TaskTable";
 
 /**
  * Pending Component
- * Fetches and displays only tasks with status='pending'. 
+ * Fetches and displays only tasks with status='pending'.
  */
 const Pending = ({ setActivePage }) => {
   const [loading, setLoading] = useState(false);
   const [pendingTasks, setPendingTasks] = useState([]);
-  
+
   // activeAction: stores the ID of the task that has its "three dots" menu open
   const [activeAction, setActiveAction] = useState();
-  
+
   // activeEditAction: stores the entire task object being edited
   const [activeEditAction, setActiveEditAction] = useState();
   const [errorMessage, setErrorMessage] = useState();
@@ -44,7 +44,7 @@ const Pending = ({ setActivePage }) => {
     };
 
     fetchTasks();
-    
+
     // Cleanup: close any open action menus when leaving the page
     return () => setActiveAction();
   }, []);
@@ -54,15 +54,15 @@ const Pending = ({ setActivePage }) => {
       The onClick here ensures that clicking anywhere outside a menu 
       clears the activeAction, effectively closing open dropdowns.
     */
-    <div onClick={() => setActiveAction()}
+    <div
+      onClick={() => setActiveAction()}
       className="px-3 sm:px-8 h-full w-full relative flex flex-col gap-7"
     >
-
       {/* Edit Modal Overlay */}
       {activeEditAction && (
         <div className="absolute w-full left-0 h-full bg-white/20 backdrop-blur-xs top-0 z-10000">
-          <EditTask 
-            setActiveEditAction={setActiveEditAction} 
+          <EditTask
+            setActiveEditAction={setActiveEditAction}
             task={activeEditAction}
           />
         </div>
@@ -80,32 +80,34 @@ const Pending = ({ setActivePage }) => {
       <div className="my-4 flex justify-between">
         <div>
           <h1 className="text-2xl font-bold">Pending Tasks</h1>
-          <p className="text-sm text-text-muted">Here are the tasks you have to do ...!</p>
+          <p className="text-sm text-text-muted">
+            Here are the tasks you have to do ...!
+          </p>
         </div>
 
         {/* Navigation to Add Task Page */}
         <div
-          onClick={() => setActivePage(2)}
-          className="flex h-fit cursor-pointer hover:bg-primary-hover bg-primary text-white px-4 py-2 rounded-sm gap-1 items-center transition-colors"
+          onClick={() => setActivePage(2)} // Shifts view to 'Add Task' component
+          className="flex h-fit cursor-pointer hover:bg-primary-hover bg-primary text-white px-4 py-2 rounded-sm gap-1 items-center"
         >
           <span className="text-xl">
             <IoIosAdd />
           </span>
-          <span className="text-sm pr-2">Add Task</span>
+          <span className="hidden sm:block text-sm pr-2">Add Task</span>
         </div>
       </div>
 
       {/* 
           Task Table: Main Data Display  
       */}
-      <TaskTable 
-        tasks={pendingTasks} 
-        setTasks={setPendingTasks} 
-        setActiveEditAction={setActiveEditAction} 
-        setErrorMessage={setErrorMessage} 
-        loading={loading} 
-        activeAction={activeAction} 
-        setActiveAction={setActiveAction} 
+      <TaskTable
+        tasks={pendingTasks}
+        setTasks={setPendingTasks}
+        setActiveEditAction={setActiveEditAction}
+        setErrorMessage={setErrorMessage}
+        loading={loading}
+        activeAction={activeAction}
+        setActiveAction={setActiveAction}
       />
     </div>
   );
